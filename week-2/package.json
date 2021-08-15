@@ -1,0 +1,12 @@
+{
+  "name": "week-2",
+  "version": "1.0.0",
+  "description": "nimble dev js course week 2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samet Koyuncu <sametkoyuncu@live.com>",
+  "license": "ISC"
+}

@@ -1,10 +1,12 @@
+const colors = require('colors')
+
 const Farm = require('./farm')
 const User = require('./user')
 const Sheep = require('./sheep')
 const Task = require('./task')
 
 function printSheep(sheep) {
-    console.log(`farm id: ${sheep.farmId}, official id: ${sheep.officialId}`)
+    console.log("farm id:".bgRed.white, `${sheep.farmId}`, " official id:".bgRed.white, `${sheep.officialId}`)
 }
 
 function printSheepList(farm) {

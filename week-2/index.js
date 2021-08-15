@@ -1,8 +1,10 @@
+const colors = require('colors')
+
 const Passenger = require('./passenger')
 const Driver = require('./driver')
 
 function printBooking(booking) {
-    console.log(`${booking.passenger.name} boked ${booking.driver.name} to travel from ${booking.origin} to ${booking.destination}.`)
+    console.log(`${booking.passenger.name.blue} boked ${booking.driver.name.green} to travel from ${booking.origin.bgRed.white} to ${booking.destination.bgWhite.red}.`)
 }
 
 const samet = new Passenger('Samet', 'Yalova')

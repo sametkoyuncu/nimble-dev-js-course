@@ -7,6 +7,18 @@ class Farm {
         this.tasks = []
         this.sheeps = []
     }
+
+    addUserToFarm(user) {
+        this.users.push(user)
+    }
+
+    addSheepToFarm(sheep) {
+        this.sheeps.push(sheep)
+    }
+
+    addTaskToFarm(task) {
+        this.tasks.push(sheep)
+    }
 }
 
 module.exports = Farm

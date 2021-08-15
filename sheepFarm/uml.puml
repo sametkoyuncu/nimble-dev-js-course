@@ -7,6 +7,9 @@ class Farm <<Entity>> {
     + Users: [user]
     + Tasks: [task]
     + Sheeps: [sheep]
+    + addUserToFarm(): User
+    + addSheepToFarm(): Sheep
+    + addTaskToFarm(): Task
 }
 
 class User <<Entity>> {
@@ -15,9 +18,6 @@ class User <<Entity>> {
     + password: String
     + role: Role
     + farm: Farm
-    + addUser(): User
-    + addSheep(): Sheep
-    + addTask(): Task
 }
 
 class Sheep <<Entity>> {

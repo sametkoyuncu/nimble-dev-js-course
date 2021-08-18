@@ -7,20 +7,23 @@ class BaseDatabase {
         this.filename = model.name.toLowerCase()+'s'
     }
 
-    save(objects) {
-        fs.writeFileSync(`./${this.filename}.json`, flatted.stringify(objects))
+    save(objects, callback = () => { console.log('internal write', this.filename)}) {
+        fs.writeFile(`${__dirname}/${this.filename}.json`, flatted.stringify(objects, null, 2), callback)
     }
 
-    load() {
-        const file = fs.readFileSync(`./${this.filename}.json`, 'utf8')
-        const objects = flatted.parse(file)
-
-        return objects.map(this.model.create)
+    load(callback = () => {}) {
+        fs.readFile(`${__dirname}/${this.filename}.json`, 'utf8', (err, file) => {
+            if (err) return callback(err)
+            
+            const objects = flatted.parse(file)
+            callback(err, objects.map(this.model.create))
+        })
     }
 
-    insert(object) {
-        const objects = this.load()
-        this.save(objects.concat(object))
+    insert(object, callback) {
+        const objects = this.load((err, objects) => {
+            this.save(objects.concat(object), callback)
+        })
     }
 
     remove(index) {

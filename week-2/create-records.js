@@ -12,15 +12,23 @@ samet.book(stefan, 'Bursa', 'Ankara')
 samet.book(stefan, 'Ankara', 'Sivas')
 betul.book(stefan, 'Bilecik', 'Bursa')
 
-passengerDatabase.save([samet, betul])
-driverDatabase.save(stefan)
+console.log('start')
+passengerDatabase.save([samet, betul], () => {
+    console.log('wrote passenger')
+    driverDatabase.save([stefan], () => {
+        console.log('done')
 
-const mert = Passenger.create({ name: 'Mert', location: 'İzmir' })
+        const mert = Passenger.create({ name: 'Mert', location: 'İzmir' })
+        passengerDatabase.insert(mert, () => {
+            const passengers = passengerDatabase.load((err, passengers) => {
+                passengers.forEach(printBookingHistory)
+            })
+        })
+    })
+})
 
-passengerDatabase.insert(mert)
 
-const passengers = passengerDatabase.load()
 
-passengers.forEach(printBookingHistory)
+
 
 // passengerDatabase.remove('passengers', 1) //remove Betül

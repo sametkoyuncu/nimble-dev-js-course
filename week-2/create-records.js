@@ -12,20 +12,46 @@ samet.book(stefan, 'Bursa', 'Ankara')
 samet.book(stefan, 'Ankara', 'Sivas')
 betul.book(stefan, 'Bilecik', 'Bursa')
 
+// const passengerSavePromise = passengerDatabase.save([samet, betul])
+// const driverSavePromise = driverDatabase.save([stefan])
+
+// passengerSavePromise
+//     .then(driverSavePromise)
+//     .catch(console.log)
+
+// with promise
 console.log('start')
-passengerDatabase.save([samet, betul], () => {
+passengerDatabase.save([samet, betul]).then(() => {
     console.log('wrote passenger')
-    driverDatabase.save([stefan], () => {
+
+    driverDatabase.save([stefan]).then(() => {
         console.log('done')
 
         const mert = Passenger.create({ name: 'Mert', location: 'İzmir' })
-        passengerDatabase.insert(mert, () => {
-            const passengers = passengerDatabase.load((err, passengers) => {
+
+        passengerDatabase.insert(mert)
+            .then(passengerDatabase.load()
+            .then(passengers => {
                 passengers.forEach(printBookingHistory)
-            })
+            }))
         })
     })
-})
+
+// with callback
+// console.log('start')
+// passengerDatabase.save([samet, betul], () => {
+//     console.log('wrote passenger')
+//     driverDatabase.save([stefan], () => {
+//         console.log('done')
+
+//         const mert = Passenger.create({ name: 'Mert', location: 'İzmir' })
+//         passengerDatabase.insert(mert, () => {
+//             const passengers = passengerDatabase.load((err, passengers) => {
+//                 passengers.forEach(printBookingHistory)
+//             })
+//         })
+//     })
+// })
 
 
 

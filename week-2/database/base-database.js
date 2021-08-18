@@ -1,5 +1,6 @@
 const fs = require('fs')
 const flatted = require('flatted')
+const { rejects } = require('assert')
 
 class BaseDatabase {
     constructor(model) {
@@ -7,23 +8,30 @@ class BaseDatabase {
         this.filename = model.name.toLowerCase()+'s'
     }
 
-    save(objects, callback = () => { console.log('internal write', this.filename)}) {
-        fs.writeFile(`${__dirname}/${this.filename}.json`, flatted.stringify(objects, null, 2), callback)
+    save(objects) {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(`${__dirname}/${this.filename}.json`, flatted.stringify(objects, null, 2), (err) => {
+                if (err) return reject(err)
+                resolve()
+            })
+        })
+        
     }
 
-    load(callback = () => {}) {
-        fs.readFile(`${__dirname}/${this.filename}.json`, 'utf8', (err, file) => {
-            if (err) return callback(err)
-            
-            const objects = flatted.parse(file)
-            callback(err, objects.map(this.model.create))
+    load() {
+        return new Promise((resolve, reject) => {
+            fs.readFile(`${__dirname}/${this.filename}.json`, 'utf8', (err, file) => {
+                if (err) return reject(err)
+                
+                const objects = flatted.parse(file)
+                resolve(objects.map(this.model.create))
+            })
         })
+        
     }
 
-    insert(object, callback) {
-        const objects = this.load((err, objects) => {
-            this.save(objects.concat(object), callback)
-        })
+    insert(object) {
+        return this.load().then(objects => this.save(objects.concat(object)))
     }
 
     remove(index) {

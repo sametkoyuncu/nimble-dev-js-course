@@ -30,27 +30,35 @@ class BaseDatabase {
         
     }
 
-    insert(object) {
-        return this.load().then(objects => this.save(objects.concat(object)))
+    async insert(object) {
+        const objects = await this.load()
+        return this.save(objects.concat(object))
     }
 
-    remove(index) {
-        const objects = this.load()
+    async remove(index) {
+        const objects = await this.load()
         objects.splice(index, 1)
-        this.save(objects)
+        await this.save(objects)
     }
 
-    update(object) {
-        const objects = this.load()
+    async update(object) {
+        const objects = await this.load()
 
         const index = objects.findIndex(o => o.id == object.id)
 
         objects.splice(index, 1, object)
-        this.save(objects)
+        await this.save(objects)
+    }
+    
+    async find(id) {
+        //way 1
+        return (await this.load()).find(o => o.id == id)
     }
 
-    findBy(prop, value) {
-        return this.load().find(o => o[prop] == value)
+    async findBy(prop, value) {
+        //way 2
+        const objects = await this.load()
+        return objects.find(o => o[prop] == value)
     }
 }
 

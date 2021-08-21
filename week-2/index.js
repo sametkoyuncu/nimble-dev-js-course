@@ -1,26 +1,11 @@
-const colors = require('colors')
-const Passenger = require('./models/passenger')
-const Driver = require('./models/driver')
-const { passengerDatabase, driverDatabase } = require('./database')
-const printBookingHistory = require('./lib/print-booking-history')
-async function main() {
-    try {
-            const samet = await passengerDatabase.findByName('Samet')
-            // const stefan = driverDatabase.findByName('Stefan')
+const express = require('express')
+const app = express()
+const port = 3000
 
-            // samet.book(stefan, 'Yalova', 'Ankara')
-            // passengerDatabase.update(samet)
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
 
-            printBookingHistory(samet)
-            // console.log(samet)
-        } catch (e) {
-            return console.log(e)
-        }
-    }
-    main()
-// console.log(passengerDatabase.findBy('location', 'Yalova'))
-
-// samet.book(stefan, 'Edirne', "Tekirdağ")
-// passengerDatabase.update(samet)
-// console.log('<-- *** --- *** -->'.bgGreen.red.bold)
-// printBookingHistory(samet)
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})

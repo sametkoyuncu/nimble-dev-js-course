@@ -24,6 +24,7 @@ class BaseDatabase {
                 if (err) return reject(err)
                 
                 const objects = flatted.parse(file)
+                // console.log(objects)
                 resolve(objects.map(this.model.create))
             })
         })

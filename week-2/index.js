@@ -45,7 +45,7 @@ app.post('/passengers/:passengerId/bookings', async (req, res) => {
     const driver = await driverDatabase.find(req.query.driverId)
     if (!driver) return res.status(404).send('Cannot find driver')
 
-    passenger.book(driver, 'Bursa', 'Denizli')
+    passenger.book(driver, req.query.origin, req.query.destination)
 
     await passengerDatabase.update(passenger)
 

@@ -39,13 +39,17 @@ app.get('/passengers/:passengerId', async (req, res) => {
 })
 
 app.post('/passengers/:passengerId/bookings', async (req, res) => {
-    const passenger = await passengerDatabase.find(req.params.passengerId)
+    const { passengerId } = req.params
+    const { driverId, origin, destination } = req.body
+
+    const passenger = await passengerDatabase.find(passengerId)
     if (!passenger) return res.status(404).send('Cannot find passenger')
 
-    const driver = await driverDatabase.find(req.query.driverId)
+    const driver = await driverDatabase.find(driverId)
     if (!driver) return res.status(404).send('Cannot find driver')
 
-    passenger.book(driver, req.query.origin, req.query.destination)
+    passenger.book(driver, origin, destination)
+    //BookingService.createBooking(passengerId, driverId, origin, destination)
 
     await passengerDatabase.update(passenger)
 

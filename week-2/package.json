@@ -11,9 +11,11 @@
   "author": "Samet Koyuncu <sametkoyuncu@live.com>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "express": "^4.17.1",
     "flatted": "^3.2.2",
+    "pug": "^3.0.2",
     "uuid": "^8.3.2"
   }
 }

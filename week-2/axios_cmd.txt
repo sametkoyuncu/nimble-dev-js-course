@@ -5,4 +5,4 @@
 # add passengers
     axios.post('/passengers', {name: 'Büşra', location: 'Tekirdağ'}).then(res => res.data).then(console.log).catch(console.log)
 # get passengers
-    axios.get('./passengers/3aa3571f-b47d-40ae-a770-f2d0025ce5d').then(res => res.data).then(console.log).catch(console.log)
+    axios.get('/passengers/3aa3571f-b47d-40ae-a770-f2d0025ce5d').then(res => res.data).then(console.log).catch(console.log)

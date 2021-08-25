@@ -1,82 +1,34 @@
-const fs = require('fs')
-const flatted = require('flatted')
-const { rejects } = require('assert')
-
 class BaseDatabase {
     constructor(model) {
-        this.model = model 
-        this.filename = model.name.toLowerCase()+'s'
+        this.model = model
     }
 
     save(objects) {
-        return new Promise((resolve, reject) => {
-            fs.writeFile(`${__dirname}/${this.filename}.json`, flatted.stringify(objects, null, 2), (err) => {
-                if (err) return reject(err)
-                resolve()
-            })
-        })
-        
+        return this.model.insertMany(objects)        
     }
 
     load() {
-        return new Promise((resolve, reject) => {
-            fs.readFile(`${__dirname}/${this.filename}.json`, 'utf8', (err, file) => {
-                if (err) return reject(err)
-                
-                const objects = flatted.parse(file)
-                // console.log(objects)
-                resolve(objects.map(this.model.create))
-            })
-        })
-        
+        return this.model.find()
     }
 
     async insert(object) {
-        const objects = await this.load()
-
-        if (!(object instanceof this.model)) {
-            object = this.model.create(object)
-        }
-        
-        await this.save(objects.concat(object))
-        return object
+        return await this.model.create(object)
     }
 
-    async remove(index) {
-        const objects = await this.load()
-        objects.splice(index, 1)
-        await this.save(objects)
+    async removeBy(property, value) {
+        return this.model.deleteOne({ [property]: value })
     }
 
-    async removeBy(prop, value) {
-        const objects = await this.load()
-
-        const index = objects.findIndex(o => o[prop] == value)
-        if (index == -1) throw new Error(`Cannot find ${this.model.name} instance with ${prop} ${value}`)
-
-        objects.splice(index, 1)
-        await this.save(objects)
-    }
-
-    async update(object) {
-        const objects = await this.load()
-
-        const index = objects.findIndex(o => o.id == object.id)
-        if (index == -1) throw new Error(`Cannot find ${this.model.name} instance with id ${object.id}`)
-        
-        objects.splice(index, 1, object)
-        await this.save(objects)
+    async update(id, object) { 
+        return this.model.findByIdAndUpdate(id, object)
     }
     
     async find(id) {
-        //way 1
-        return (await this.load()).find(o => o.id == id)
+        return this.model.findById(id)
     }
 
-    async findBy(prop, value) {
-        //way 2
-        const objects = await this.load()
-        return objects.find(o => o[prop] == value)
+    async findBy(property, value) {
+        return this.model.find({ [property]: value })
     }
 }
 

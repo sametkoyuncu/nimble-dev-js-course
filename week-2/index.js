@@ -2,6 +2,7 @@ const express = require('express')
 const indexRouter = require('./routes/index')
 const passengersRouter = require('./routes/passengers')
 const bodyParser = require('body-parser')
+require('./mongo-connection')
 const app = express()
 const port = 3000
 

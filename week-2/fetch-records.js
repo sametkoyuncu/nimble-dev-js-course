@@ -1,15 +1,15 @@
 const colors = require('colors')
 const Passenger = require('./models/passenger')
 const Driver = require('./models/driver')
-const { passengerDatabase, driverDatabase } = require('./database')
+const { passengerService, driverService } = require('./services')
 const printBookingHistory = require('./lib/print-booking-history')
 async function main() {
     try {
-            const samet = await passengerDatabase.findByName('Samet')
-            // const stefan = driverDatabase.findByName('Stefan')
+            const samet = await passengerService.findByName('Samet')
+            // const stefan = driverService.findByName('Stefan')
 
             // samet.book(stefan, 'Yalova', 'Ankara')
-            // passengerDatabase.update(samet)
+            // passengerService.update(samet)
 
             printBookingHistory(samet)
             // console.log(samet)
@@ -18,9 +18,9 @@ async function main() {
         }
     }
     main()
-// console.log(passengerDatabase.findBy('location', 'Yalova'))
+// console.log(passengerService.findBy('location', 'Yalova'))
 
 // samet.book(stefan, 'Edirne', "Tekirdağ")
-// passengerDatabase.update(samet)
+// passengerService.update(samet)
 // console.log('<-- *** --- *** -->'.bgGreen.red.bold)
 // printBookingHistory(samet)

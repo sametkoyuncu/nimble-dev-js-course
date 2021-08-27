@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "flatted": "^3.2.2",
     "mongoose": "^5.13.8",
+    "mongoose-autopopulate": "^0.14.0",
     "pug": "^3.0.2",
     "uuid": "^8.3.2"
   }

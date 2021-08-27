@@ -1,6 +1,6 @@
 const Passenger = require('./models/passenger')
 const Driver = require('./models/driver')
-const { passengerDatabase, driverDatabase } = require('./database')
+const { passengerService, driverService } = require('./services')
 const printBookingHistory = require('./lib/print-booking-history')
 
 const samet = Passenger.create({ name: 'Samet', location: 'Yalova' })
@@ -14,15 +14,15 @@ betul.book(stefan, 'Bilecik', 'Bursa')
 
 async function main() {
     try {
-        await passengerDatabase.save([samet, betul])
-        await driverDatabase.save([stefan])
+        await passengerService.save([samet, betul])
+        await driverService.save([stefan])
 
         const mert = Passenger.create({ name: 'Mert', location: 'İzmir' })
         mert.book(stefan, 'Bilecik', 'İstanbul')
 
-        await passengerDatabase.insert(mert)
+        await passengerService.insert(mert)
         
-        const passengers = await passengerDatabase.load()
+        const passengers = await passengerService.load()
         passengers.forEach(printBookingHistory)
     } catch (e) {
         return console.log(e)
@@ -30,4 +30,4 @@ async function main() {
 }
 main()
 
-// passengerDatabase.remove('passengers', 1) //remove Betül
+// passengerService.remove('passengers', 1) //remove Betül

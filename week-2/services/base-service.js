@@ -1,4 +1,4 @@
-class BaseDatabase {
+class BaseService {
     constructor(model) {
         this.model = model
     }
@@ -30,6 +30,10 @@ class BaseDatabase {
     async findBy(property, value) {
         return this.model.find({ [property]: value })
     }
+
+    // async query(obj) {
+    //     return this.model.find(obj)
+    // }
 }
 
-module.exports = BaseDatabase
+module.exports = BaseService

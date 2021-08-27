@@ -1,28 +1,34 @@
 const flatted = require('flatted')
-const { passengerDatabase, driverDatabase } = require('../database')
+const { passengerService } = require('../services')
+const booking = require('../models/booking')
 
 const router = require('express').Router()
 
 router.get('/', async (req, res) => {
-    const passengers = await passengerDatabase.load()
-    // res.send(flatted.stringify(passengers))
+    const passengers = await passengerService.load()
     res.render('passengers', { passengers })
 })
 
-router.post('/', async (req, res) => {
-    const passenger = await passengerDatabase.insert(req.body)
+router.post('/', async (req, res, next) => {
+    try {
+        const passenger = await passengerService.insert(req.body)
+        res.send(passenger)
+    } catch (error) {
+        next(error)
+    }
+    
 
-    res.send(passenger)
+    
 })
 
 router.delete('/:passengerId', async (req, res) => {
-    await passengerDatabase.removeBy('_id', req.params.passengerId)
+    await passengerService.removeBy('_id', req.params.passengerId)
 
     res.send('OK')
 })
 
 router.get('/:passengerId', async (req, res) => {
-    const passenger = await passengerDatabase.find(req.params.passengerId)
+    const passenger = await passengerService.find(req.params.passengerId)
     if (!passenger) return res.status(404).send('Cannot find passenger')
 
     res.render('passenger', { passenger })
@@ -32,25 +38,17 @@ router.post('/:passengerId/bookings', async (req, res) => {
     const { passengerId } = req.params
     const { driverId, origin, destination } = req.body
 
-    const passenger = await passengerDatabase.find(passengerId)
-    if (!passenger) return res.status(404).send('Cannot find passenger')
-
-    const driver = await driverDatabase.find(driverId)
-    if (!driver) return res.status(404).send('Cannot find driver')
-
-    passenger.book(driver, origin, destination)
+    const booking = await passengerService.book(driverId, passengerId, origin, destination)
     //BookingService.createBooking(passengerId, driverId, origin, destination)
 
-    await passengerDatabase.update(passenger)
-
-    res.send(flatted.stringify(passenger))
+    res.send(booking)
 })
 
 router.patch('/:passengerId', async (req, res) => {
     const { name } = req.body
     const { passengerId } = req.params
 
-    await passengerDatabase.update(passengerId, { name })
+    await passengerService.update(passengerId, { name })
 })
 
 module.exports = router

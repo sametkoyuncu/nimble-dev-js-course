@@ -1,15 +1,10 @@
-const uuid = require('uuid')
+const mongoose = require('mongoose')
 
-class Driver {
-    constructor(id = uuid.v4(), name, location) {
-        this.id = id
-        this.name = name
-        this.location = location
-    }
+const DriverSchema = new mongoose.Schema({
+    name: String,
+    age: { type: Number, required: true, min: 18 },
+    location: String
 
-    static create({ id, name, location }) {
-        return new Driver(id, name, location)
-    }
-}
+})
 
-module.exports = Driver
+module.exports = mongoose.model('Driver', DriverSchema)

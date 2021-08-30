@@ -4,9 +4,10 @@
   "description": "nimble dev js course week 2",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon --ignore '*.json'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .bin/www",
+    "watch": "nodemon --ignore '*.json' .bin/www",
+    "test": "jest --coverage --verbose",
+    "test-watch": "jest --coverage --verbose --watch"
   },
   "author": "Samet Koyuncu <sametkoyuncu@live.com>",
   "license": "ISC",
@@ -19,5 +20,9 @@
     "mongoose-autopopulate": "^0.14.0",
     "pug": "^3.0.2",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "jest": "^27.1.0",
+    "supertest": "^6.1.6"
   }
 }

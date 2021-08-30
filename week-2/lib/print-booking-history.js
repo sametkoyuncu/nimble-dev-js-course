@@ -1,7 +1,7 @@
 const colors = require('colors')
 
 function printBooking(booking) {
-    console.log(`${booking.passenger.name.blue} boked ${booking.driver.name.green} to travel from ${booking.origin.bgRed.white} to ${booking.destination.bgWhite.red}.`)
+    console.log(`${booking.passenger.name.blue} booked ${booking.driver.name.green} to travel from ${booking.origin.bgRed.white} to ${booking.destination.bgWhite.red}.`)
 }
 
 function printBookingHistory(passenger) {

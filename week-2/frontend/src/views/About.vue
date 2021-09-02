@@ -13,6 +13,6 @@ export default {
 <template lang="pug">
   .about
     h1 This is an about page
-    HelloWorld(msg="This is İstanbul!")
+    HelloWorld(count = "3", msg="This is İstanbul!")
   </div>
 </template>

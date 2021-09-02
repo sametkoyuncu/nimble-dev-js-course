@@ -5,8 +5,13 @@ const booking = require('../models/booking')
 const router = require('express').Router()
 
 router.get('/', async (req, res) => {
-    const passengers = await passengerService.load()
-    res.render('passengers', { passengers })
+    res.send(await passengerService.load())
+    // return html or json type
+    // const passengers = await passengerService.load()
+    // const type = req.query.type || 'json'
+
+    // if (type == 'json') res.send(passengers)
+    // else res.render('passengers', { passengers })
 })
 
 router.post('/', async (req, res, next) => {
@@ -16,9 +21,6 @@ router.post('/', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-    
-
-    
 })
 
 router.delete('/:passengerId', async (req, res) => {
@@ -31,7 +33,8 @@ router.get('/:passengerId', async (req, res) => {
     const passenger = await passengerService.find(req.params.passengerId)
     if (!passenger) return res.status(404).send('Cannot find passenger')
 
-    res.render('passenger', { passenger })
+    res.send(passenger)
+    // res.render('passenger', { passenger })
 })
 
 router.post('/:passengerId/bookings', async (req, res) => {

@@ -1,0 +1,8 @@
+# add booking
+    axios.post('/passengers/ce7dc678-c690-4ac4-936a-047f26f61816/bookings', {driverId: 'e0e21089-862e-4e0e-83ca-66b3e54ca607', origin: 'Aydın', destination: 'İzmir' }).then(res => res.data).then(console.log).catch(console.log)
+# delete passengers
+    axios.delete('/passengers/7ff4a928-99b0-4ba9-b860-4eb4619ee94e').then(res => res.data).then(console.log).catch(console.log)
+# add passengers
+    axios.post('/passengers', {name: 'Büşra', location: 'Tekirdağ'}).then(res => res.data).then(console.log).catch(console.log)
+# get passengers
+    axios.get('/passengers/3aa3571f-b47d-40ae-a770-f2d0025ce5d').then(res => res.data).then(console.log).catch(console.log)

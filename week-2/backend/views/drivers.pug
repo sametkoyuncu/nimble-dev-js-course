@@ -1,0 +1,11 @@
+extends layout
+block content 
+    h2 Drivers
+    p There are #{drivers.length} drivers waiting.
+
+    ol 
+        each driver in drivers
+            li
+                a(href=`http://localhost:3000/drivers/${driver.id}`)= driver.name 
+                hr
+                br

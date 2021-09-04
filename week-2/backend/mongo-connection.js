@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://mongodb/nimble-dev'
 
+
 mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const db = mongoose.connection;

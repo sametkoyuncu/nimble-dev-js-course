@@ -7,10 +7,10 @@ services:
   backend:
     build: backend
     environment: 
-      MONGODB_CONNECTION_STRING: "mongodb://database/taxi-booking-app"
+      MONGODB_CONNECTION_STRING: "mongodb://mongodb/taxi-booking-app"
     ports: 
       - 3000:3000
-  database:
+  mongodb:
     image: mongo:4.2
     ports: 
       - 37017:27017
